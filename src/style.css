@@ -1,0 +1,191 @@
+:root {
+    --primary: #10b981;
+    --primary-dark: #059669;
+    --bg: #f3f4f6;
+    --card-bg: #ffffff;
+    --text: #1f2937;
+    --text-light: #6b7280;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 30px 20px;
+}
+
+h1 {
+    text-align: center;
+    color: var(--primary-dark);
+    margin-bottom: 5px;
+    font-size: 2.5rem;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--text-light);
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+}
+
+.controls {
+    background: var(--card-bg);
+    padding: 20px 30px;
+    border-radius: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* On ajoute l'input de recherche ici */
+button,
+select,
+input[type="text"] {
+    padding: 10px 20px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #fff;
+    transition: all 0.2s;
+    outline: none;
+}
+
+/* NOUVEAU : Style spécifique pour la barre de recherche */
+input[type="text"] {
+    cursor: text;
+    flex-grow: 1;
+    /* Permet à la barre de prendre toute la largeur disponible */
+    min-width: 250px;
+    /* Évite qu'elle soit trop petite sur mobile */
+}
+
+/* N'oublie pas de mettre à jour le hover pour l'input aussi */
+button:hover,
+select:hover,
+input[type="text"]:focus {
+    border-color: var(--primary);
+}
+
+.btn-tri {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    font-weight: 600;
+}
+
+.btn-tri:hover {
+    background-color: var(--primary-dark);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+    border: 1px solid #e5e7eb;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.1);
+}
+
+.card-header-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.card-img-container {
+    width: 100%;
+    aspect-ratio: 184 / 260;
+    background-color: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.card-img.fallback {
+    width: 40%;
+    height: 40%;
+    opacity: 0.3;
+}
+
+.numero-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(16, 185, 129, 0.9);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 2;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 15px 0 5px 0;
+    text-align: center;
+    color: var(--text);
+    padding: 0 10px;
+}
+
+.card-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 12px;
+    text-align: center;
+    font-style: italic;
+}
+
+.tag {
+    background-color: #e0f2fe;
+    color: #0284c7;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+}
+
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px;
+    color: var(--text-light);
+    font-size: 1.2rem;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Roster Animal Crossing - Vite</title>
+</head>
+<body>
+
+    <h1>amiibo Animal Crossing</h1>
+   
+
+   <div class="controls">
+        <input type="text" id="recherche-nom" placeholder="Rechercher un habitant..." />
+
+        <button id="btn-sort-num" class="btn-tri">Trier par Numéro</button>
+        <button id="btn-sort-alpha" class="btn-tri">Trier A-Z</button>
+        
+        <div class="filter-group">
+            <select id="filtre-espece">
+                <option value="Toutes">Toutes les espèces</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="grid" id="roster-container"></div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
