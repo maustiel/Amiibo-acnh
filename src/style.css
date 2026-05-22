@@ -18,8 +18,9 @@ body {
 h1 {
     text-align: center;
     color: var(--primary-dark);
-    margin-bottom: 5px;
     font-size: 2.5rem;
+    margin-top: 0;
+    margin-bottom: 40px;
 }
 
 .subtitle {
@@ -152,7 +153,7 @@ input[type="search"]:focus {
 }
 
 .card-title {
-    font-size: 1.25rem;
+    font-size: 1.9rem;
     font-weight: 700;
     margin: 15px 0 5px 0;
     text-align: center;
