@@ -1,30 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Roster Animal Crossing - Vite</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liste personnages Animal Crossing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body>
-
-    <h1>amiibo Animal Crossing</h1>
-   
+  </head>
+  <body>
+    <h1>Liste personnages Animal Crossing</h1>
 
    <div class="controls">
-        <input type="text" id="recherche-nom" placeholder="Rechercher un habitant..." />
+        <input type="search" id="recherche-nom" placeholder="Rechercher un habitant..." />
 
         <button id="btn-sort-num" class="btn-tri">Trier par Numéro</button>
         <button id="btn-sort-alpha" class="btn-tri">Trier A-Z</button>
-        
-        <div class="filter-group">
+        <button id="btn-reset" class="btn-reset">Réinitialiser ❌</button>
+        <div class="filter-group" style="display: flex; gap: 10px; width: 100%; justify-content: center; margin-top: 10px;">
+            <select id="filtre-serie">
+                <option value="Toutes">Toutes les séries</option>
+                <option value="Série 1">Série 1 (1-100)</option>
+                <option value="Série 2">Série 2 (101-200)</option>
+                <option value="Série 3">Série 3 (201-300)</option>
+                <option value="Série 4">Série 4 (301-400)</option>
+                <option value="Série 5">Série 5 (401-448)</option>
+                <option value="Welcome">Welcome amiibo</option>
+                <option value="Collaboration">Collaboration Sanrio/Zelda</option>
+            </select>
+
             <select id="filtre-espece">
                 <option value="Toutes">Toutes les espèces</option>
             </select>
         </div>
-    </div>
+    </div> <div class="grid" id="roster-container"></div>
 
     <div class="grid" id="roster-container"></div>
 
     <script type="module" src="/src/main.js"></script>
-</body>
+
+
+    <button id="btn-remonter" title="Retour en haut"><i class="fa-solid fa-arrow-up"></i></button>
+  </body>
 </html>

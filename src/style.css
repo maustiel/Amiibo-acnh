@@ -48,7 +48,7 @@ h1 {
 /* On ajoute l'input de recherche ici */
 button,
 select,
-input[type="text"] {
+input[type="search"] {
     padding: 10px 20px;
     border: 1px solid #d1d5db;
     border-radius: 8px;
@@ -59,22 +59,19 @@ input[type="text"] {
     outline: none;
 }
 
-/* NOUVEAU : Style spécifique pour la barre de recherche */
-input[type="text"] {
+/* Style spécifique pour la barre de recherche (prend toute la largeur) */
+input[type="search"] {
     cursor: text;
     flex-grow: 1;
-    /* Permet à la barre de prendre toute la largeur disponible */
     min-width: 250px;
-    /* Évite qu'elle soit trop petite sur mobile */
 }
 
-/* N'oublie pas de mettre à jour le hover pour l'input aussi */
+/* Met à jour le hover/focus pour l'input */
 button:hover,
 select:hover,
-input[type="text"]:focus {
+input[type="search"]:focus {
     border-color: var(--primary);
 }
-
 .btn-tri {
     background-color: var(--primary);
     color: white;
@@ -188,4 +185,50 @@ input[type="text"]:focus {
     padding: 50px;
     color: var(--text-light);
     font-size: 1.2rem;
+}
+
+/* === BOUTON RETOUR EN HAUT === */
+#btn-remonter {
+    position: fixed;
+    /* Le fixe à l'écran par-dessus le reste */
+    bottom: 30px;
+    /* À 30px du bas de l'écran */
+    right: 30px;
+    /* À 30px de la droite de l'écran */
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    /* Le rend parfaitement rond */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    /* Le force à rester au premier plan */
+    transition: all 0.3s ease;
+}
+
+#btn-remonter:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-5px);
+    /* Petit bond au survol */
+}
+
+/* === BOUTON RÉINITIALISER === */
+.btn-reset {
+    background-color: #ef4444;
+    /* Un beau rouge doux */
+    color: white;
+    border: none;
+    font-weight: 600;
+}
+
+.btn-reset:hover {
+    background-color: #dc2626;
+    /* Un rouge un peu plus foncé au survol */
 }

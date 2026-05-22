@@ -10,21 +10,25 @@ let ordreTri = 'numero';
 // === SELECTION DOM ===
 const container = document.getElementById('roster-container');
 const selectEspece = document.getElementById('filtre-espece');
+const selectSerie = document.getElementById('filtre-serie'); // <-- Le nouveau select
 const btnSortNum = document.getElementById('btn-sort-num');
 const btnSortAlpha = document.getElementById('btn-sort-alpha');
 const inputRecherche = document.getElementById('recherche-nom');
+const btnRemonter = document.getElementById('btn-remonter');
+const btnReset = document.getElementById('btn-reset');
+
 
 /**
- * Initialisation générale du JavaScript Client
+ * Initialisation générale
  */
 function init() {
     initFiltres();
     setupEventListeners();
-    trier('numero'); // Affichage initial par numéro
+    trier('numero');
 }
 
 /**
- * Remplit dynamiquement la liste déroulante des espèces uniques
+ * Remplit dynamiquement la liste déroulante des espèces
  */
 function initFiltres() {
     const especesBrutes = habitants.map(h => h.especes).filter(e => e && e.trim() !== "");
@@ -39,7 +43,7 @@ function initFiltres() {
 }
 
 /**
- * Met à jour le DOM pour afficher la grille de cartes actuelle
+ * Met à jour le DOM pour afficher les cartes
  */
 function render() {
     container.innerHTML = '';
@@ -56,8 +60,28 @@ function render() {
 }
 
 /**
- * Trie les données selon le critère choisi
- * @param {string} critere 'numero' ou 'nom'
+ * "Cerveau" pour déduire la série selon le numéro
+ */
+function getSerie(numero) {
+    const numStr = String(numero).trim().toUpperCase();
+    
+    if (numStr.startsWith('W')) return 'Welcome';
+    if (numStr.startsWith('S')) return 'Collaboration';
+    
+    // Si c'est un numéro normal
+    const num = parseInt(numStr, 10);
+    if (!isNaN(num)) {
+        if (num >= 1 && num <= 100) return 'Série 1';
+        if (num >= 101 && num <= 200) return 'Série 2';
+        if (num >= 201 && num <= 300) return 'Série 3';
+        if (num >= 301 && num <= 400) return 'Série 4';
+        if (num >= 401 && num <= 448) return 'Série 5';
+    }
+    return 'Autre';
+}
+
+/**
+ * Trie les données
  */
 function trier(critere) {
     ordreTri = critere;
@@ -87,17 +111,22 @@ function trier(critere) {
 }
 
 /**
- * Filtre les habitants selon l'espèce sélectionnée ET la recherche textuelle
+ * Filtre les habitants (Série + Espèce + Recherche textuelle)
  */
 function filtrer() {
     const espece = selectEspece.value;
+    const serie = selectSerie.value;
     const texteRecherche = inputRecherche.value.toLowerCase().trim();
 
     affichageCourant = habitants.filter(h => {
-        // 1. Vérifier l'espèce
+        // 1. Vérification de la série
+        const villagerSerie = getSerie(h.numero);
+        const matchSerie = (serie === 'Toutes') || (villagerSerie === serie);
+
+        // 2. Vérification de l'espèce
         const matchEspece = (espece === 'Toutes') || (h.especes === espece);
         
-        // 2. Vérifier le texte (cherche dans le Nom Français, Anglais, ou le numéro)
+        // 3. Vérification du texte
         const nomFR = String(h['Nom Français'] || '').toLowerCase();
         const nomEN = String(h['Nom Anglais'] || '').toLowerCase();
         const numero = String(h.numero).toLowerCase();
@@ -106,24 +135,75 @@ function filtrer() {
                                nomEN.includes(texteRecherche) || 
                                numero.includes(texteRecherche);
 
-        // L'habitant doit correspondre aux deux filtres pour être affiché
-        return matchEspece && matchRecherche;
+        // L'habitant doit correspondre aux 3 filtres à la fois
+        return matchSerie && matchEspece && matchRecherche;
     });
     
-    trier(ordreTri); // Réapplique le tri après filtrage
+    trier(ordreTri);
 }
 
 /**
- * Attache les observateurs d'événements (Event Listeners)
+ * Attache les événements
  */
 function setupEventListeners() {
+    // 1. Écoute des deux menus déroulants (Espèce et Série)
     selectEspece.addEventListener('change', filtrer);
+    selectSerie.addEventListener('change', filtrer);
+    
+    // 2. Boutons de tri
     btnSortNum.addEventListener('click', () => trier('numero'));
     btnSortAlpha.addEventListener('click', () => trier('nom'));
     
-    // NOUVEAU : On écoute ce que l'utilisateur tape ('input' s'active à chaque lettre tapée)
+    // 3. Recherche en temps réel
     inputRecherche.addEventListener('input', filtrer);
+    
+    // 4. Vider la recherche avec la touche "Entrée"
+    inputRecherche.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            inputRecherche.value = '';
+            filtrer(); 
+            inputRecherche.blur(); // Enlève le focus de la barre de recherche
+        }
+    });
+
+    // 5. Action du bouton Réinitialiser
+    if (btnReset) {
+        btnReset.addEventListener('click', () => {
+            // On remet les menus déroulants à zéro
+            selectEspece.value = 'Toutes';
+            selectSerie.value = 'Toutes';
+            
+            // On vide la barre de recherche
+            inputRecherche.value = '';
+            
+            // On remet le tri par défaut (Numéro)
+            ordreTri = 'numero';
+            
+            // On relance le filtrage pour mettre à jour l'écran
+            filtrer();
+        });
+    }
+
+    // 6. Apparition du bouton "Remonter" au défilement (scroll)
+    window.addEventListener('scroll', () => {
+        if (!btnRemonter) return; // Sécurité si le bouton n'existe pas en HTML
+        if (window.scrollY > 300) {
+            btnRemonter.classList.add('visible');
+        } else {
+            btnRemonter.classList.remove('visible');
+        }
+    });
+
+    // 7. Action de remonter tout en haut au clic
+    if (btnRemonter) {
+        btnRemonter.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
 }
 
-// Lancement au chargement du DOM
+// Lancement
 document.addEventListener('DOMContentLoaded', init);
